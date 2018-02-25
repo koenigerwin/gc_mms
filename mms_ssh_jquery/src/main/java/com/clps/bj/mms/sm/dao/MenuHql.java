@@ -50,6 +50,9 @@ public interface MenuHql {
 	// 查询对应name的菜单
 	public String queryMenuByName = "FROM Menu m where menuName like ? ORDER BY m.menuSortNum,m.menuSortId ";
 	
+	//通过创建日期筛选菜单
+	public String queryMenuDate = "FROM Menu m where m.menuCreatedDatetime > ? and m.menuCreatedDatetime<?";
+		
 	
 
 }

@@ -26,7 +26,7 @@
 		}
 		$('#menuName').val(frameElement.dialog.get("data").name);
 		 var menuBox =  $("#menuBox").ligerListBox({
-              url:'${cp}/menu/getPermissionByMId?'+$.param({
+              url:'${cp}/sm/menu/getPermissionByMId?'+$.param({
             	  id:frameElement.dialog.get("data").id
               }),
 			  isShowCheckBox: false,
@@ -36,7 +36,7 @@
 		 
 		  
 		  $("#functionBox").ligerListBox({
-			  url:'${cp}/menu/loadNoExistPer?'+$.param({
+			  url:'${cp}/sm/menu/loadNoExistPer?'+$.param({
             	  id:frameElement.dialog.get("data").id
               }),
 			  isShowCheckBox: false,
@@ -178,7 +178,7 @@
         if (!selecteds || !selecteds.length) return;
 	
 		 $.ajax({
-			url:'${cp}/menu/updatePermission',
+			url:'${cp}/sm/menu/updatePermission',
 			data:{
 				"existPers":JSON.stringify(existPers.data),
 				"noExistPers":JSON.stringify(noExistPers.data),

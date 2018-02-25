@@ -23,7 +23,7 @@ $(function ()
 {
 	
 	sortBox = $("#sortId").ligerListBox({
-   	 url:'${cp}/menu/getELevelMenu?'+$.param({
+   	 url:'${cp}/sm/menu/getELevelMenu?'+$.param({
        		id:frameElement.dialog.get("data").id
        	}),isShowCheckBox: false, isMultiSelect: false,
          valueFieldID: 'test3',height:100
@@ -74,7 +74,7 @@ $(function ()
 			async : false,
 		    cache : false,
 			
-			url:'${cp}/menu/addMenuOpe',
+			url:'${cp}/sm/menu/addMenuOpe',
 			data:{
 				txtPid:$("#txtPid").val(),
 				txtIcon:$("#iconSelect").val(),
@@ -136,7 +136,7 @@ $(function ()
 </head>
 <body style="padding:10px">
 
-    <form id="form1" name="form1" method="post" action="${cp}/menu/addMenuOpe" >
+    <form id="form1" name="form1" method="post" action="${cp}/sm/menu/addMenuOpe" >
         <input type="hidden" id="txtPid" name="txtPid" value=""/>
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >
             	

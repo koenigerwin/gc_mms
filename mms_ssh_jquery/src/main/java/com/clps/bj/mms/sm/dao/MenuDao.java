@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.clps.bj.mms.common.util.pagination.model.PageBean;
 import com.clps.bj.mms.sm.entity.Menu;
+import com.clps.bj.mms.sm.vo.MyInfoDetail;
 
 
 /**
@@ -159,5 +160,14 @@ public interface MenuDao {
 	 * @return List<Menu>
 	 */
 	public List<Menu> getELevelMenu(String id);
+	
+	/**
+	 * 通过创建日期查询菜单
+	 * @param start  开始日期
+	 * @param end    结束日期
+	 * @return List<Menu>
+	 * @throws Exception 
+	 */
+	public List<Menu> queryMenuDate(String start, String end) throws Exception;
 	
 }

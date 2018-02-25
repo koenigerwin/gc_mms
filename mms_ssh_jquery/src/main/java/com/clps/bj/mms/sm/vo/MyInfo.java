@@ -25,7 +25,7 @@ public class MyInfo implements Comparable<MyInfo>{
 	protected Integer pid;     //父类id
 	protected String sort;     //等级
 	protected String sortNum;     //排序号
-	
+	protected boolean ischecked;
 	protected List nodes = new ArrayList();
 	protected List properties = new ArrayList();
 	
@@ -33,6 +33,19 @@ public class MyInfo implements Comparable<MyInfo>{
 	
 	
 	
+	
+	/**
+	 * @return the ischecked
+	 */
+	public final boolean isIschecked() {
+		return ischecked;
+	}
+	/**
+	 * @param ischecked the ischecked to set
+	 */
+	public final void setIschecked(boolean ischecked) {
+		this.ischecked = ischecked;
+	}
 	/**
 	 * @return the properties
 	 */

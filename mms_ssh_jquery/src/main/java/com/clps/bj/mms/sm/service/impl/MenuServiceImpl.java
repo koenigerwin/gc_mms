@@ -8,30 +8,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import com.clps.bj.mms.common.util.data.MyDate;
 import com.clps.bj.mms.common.util.factory.UtilFactory;
 import com.clps.bj.mms.common.util.pagination.model.PageBean;
 import com.clps.bj.mms.constant.TimeFormatConstant;
 import com.clps.bj.mms.sm.dao.MenuDao;
-import com.clps.bj.mms.sm.dao.MenuPermissionDao;
-import com.clps.bj.mms.sm.dao.impl.MenuDaoImpl;
+
 import com.clps.bj.mms.sm.entity.Menu;
-import com.clps.bj.mms.sm.entity.MenuPermission;
-import com.clps.bj.mms.sm.entity.MenuTest;
-import com.clps.bj.mms.sm.entity.Permission;
+
 import com.clps.bj.mms.sm.service.IGrantService;
 import com.clps.bj.mms.sm.service.IMenuService;
 import com.clps.bj.mms.sm.vo.MenuPermissionInfo;
-import com.clps.bj.mms.sm.vo.MenuPermissionMVo;
+
 import com.clps.bj.mms.sm.vo.MyInfo;
 import com.clps.bj.mms.sm.vo.MyInfoDetail;
-import com.clps.bj.mms.sm.vo.PermissionInfo;
+
 import com.clps.bj.mms.sm.vo.UUIdText;
 
 
@@ -547,6 +543,18 @@ public class MenuServiceImpl implements IMenuService{
 			e.printStackTrace();
 		}
 		return isSuc;
+	}
+
+	@Override
+	public List<MyInfoDetail> queryMenuDate(String start, String end) {
+		List<MyInfoDetail> details = null;
+		try {
+			 details = putDataToVo(menuDao.queryMenuDate(start,end)) ;
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return details;
 	}
 
 	

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+	pageEncoding="utf-8" isELIgnored="false"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="cp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -22,18 +22,31 @@
 <script src="${cp}/static/js/ligerUI/lib/json2.js"></script>
 <script type="text/javascript">
         var manager;
+        var len ;
         $(function ()
         {
         	if('${msg}'!=null && '${msg}' != '' && '${msg}' != 'null'){
         		alert('${msg}');
         	};
-            manager = $("#maingrid").ligerGrid({
-            	url : '${cp}/menu/queryMenus?' + $.param({
+        	
+        	$("#dateSelect").ligerDateEditor({ showTime: true, label: '开始时间', labelWidth: 100, labelAlign: 'left',format:'yyyy-MM-dd'  });
+        	
+        	$("#dateSelectEnd").ligerDateEditor({ showTime: true, label: '结束时间', labelWidth: 100, labelAlign: 'left',format:'yyyy-MM-dd' });
+        	
+        	
+
+        	var urle = '${cp}/sm/menu/queryMenus?' + $.param({
 				typeid : '1',
 				parentid : '0',
 				child : '1',
 				headerImg :'${cp}/static/img/icon/cup.ico'
-			}),
+			});
+        	
+            manager = $("#maingrid").ligerGrid({
+            	url : urle,
+            	hideLoadButton:true ,
+            	allowUnSelectRow :true,
+            	allowHideColumn : false,
 			columns : [ 
 			{
 				display : '图标',
@@ -104,7 +117,7 @@
 					
 					if(select || select==0){
 						
-						openwinByUpdate('${cp}/menu/addMenu',select.id,select.name);
+						openwinByUpdate('${cp}/sm/menu/addMenu',select.id,select.name);
 					}
 				},
 				icon : 'add'
@@ -124,7 +137,7 @@
 					}
 					
 					
-					openwinByUpdate('${cp}/menu/updateMenuForward',select.id,select.name,select.description,select.url,select.icon,pId,pName);
+					openwinByUpdate('${cp}/sm/menu/updateMenuForward',select.id,select.name,select.description,select.url,select.icon,pId,pName);
 				}
 			}, {
 				line : true
@@ -132,16 +145,35 @@
 				text : '删除基本信息',
 				click : function(item){
 					var id = getSelectData(item).id;
+					$.ajax({
+						url:'${cp}/sm/menu/deleteMenu',
+						data:{
+							id:id
+						},
+						dataType:"html",
+						success:function(data){
+							if(data != null && data != ""){
+								alert(data);
+								top.location.reload();
+							}
+						},
+						error:function(data){
+							if(data != null && data != ""){
+								alert(data+"err");
+								top.location.reload();
+							}
+						}
+						
+					});
+					//window.location.href= "${cp}/sm/menu/queryAll";
 					
-					window.location.href= "${cp}/menu/deleteMenu?id="+id;
-					top.location.reload();
 				}
 			}, {
 				text : '关联',
 				click : function(item){
 					var select = getSelectData();
-					alert(select.name);
-					openwinByUpdate('${cp}/menu/forwardToRelation',select.id,select.name);
+					
+					openwinByUpdate('${cp}/sm/menu/forwardToRelation',select.id,select.name);
 				}
 			} ]
 		});
@@ -154,12 +186,35 @@
 </script>
 <!-- 设置菜单 -->
 <script type="text/javascript">
-	/* 刷新方法 */
-	function refresh(){
-		window.location.href("${cp}/menu/queryAll");
+	function loading(currentData){
+		
+    		//alert(len);
+    	if(len !=null && len!=""){
+    		alert(currentData.toJSONString());
+    		currentData = len;
+    	}
 	}
 
-	
+
+	/* 刷新方法 */
+	function refresh(){
+		window.location.href("${cp}/sm/menu/queryAll");
+	}
+	//通过创建时间筛选
+	function queryDate(){
+		var start = $("#dateSelect").val();
+		var end = $("#dateSelectEnd").val();
+		if(start>end){
+			alert("起始日期不能大于截止日期");
+		}else{
+			window.location.href="${cp}/sm/menu/queryDateForward?startDate="+start
+					+"&endDate="+end;
+			
+		}
+		
+		
+		
+	}
 	
 	
 	/* 在选中的菜单下添加新的孩子 */
@@ -208,14 +263,10 @@
 		var data = manager.getSelectedRow();
 		if (!data) {
 			var te = item.text;
-			if(te == '增加'){
-				if(confirm("你是要添加到根目录")){
-					return 0;
-				}
-			}else{
-				alert("请选择要查看的菜单信息");
-			}
-			return null;
+			
+			alert("请选择要查看的菜单信息");
+			
+			
 		} 
 		return data;
 	}
@@ -230,7 +281,7 @@
 	function queryLike(){
 		var txt = $('#txtMenu').val();
 		
-		window.location.href="${cp}/menu/queryLikeForward?name="+txt;
+		window.location.href="${cp}/sm/menu/queryLikeForward?name="+txt;
 		
 	}
 	
@@ -255,9 +306,15 @@
 		<div style="margin: 2px;">
 			菜单： <input type="text" value="菜单" id="txtMenu"> 
 			   &nbsp;&nbsp;<input type="button" value="查找" id="query" onclick="queryLike()">
+			   
+			  <input type="text" name="date" id="dateSelect" title="选择日期">
+				<input type="text" name="dateEnd" id="dateSelectEnd" title="选择日期">
+				<input type="button" name="dateQuery" id="dateQuery" value="查找" onclick="queryDate()">
 		</div>
 		<div id="addMenu" title="创建新的菜单"></div>
+		
 		<div id="maingrid"></div>
+		<div id="maingrid2"></div>
 		
 </body>
 </html>

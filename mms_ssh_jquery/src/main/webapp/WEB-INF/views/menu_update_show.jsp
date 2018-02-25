@@ -24,7 +24,7 @@
         	
            //设置弹出表格
         	g = $("#maingrid4").ligerGrid({
-        		 url: '${cp}/menu/menuUpdateLoad?'+$.param({
+        		 url: '${cp}/sm/menu/menuUpdateLoad?'+$.param({
         			 
                  	id:${param.id}
                  }), 

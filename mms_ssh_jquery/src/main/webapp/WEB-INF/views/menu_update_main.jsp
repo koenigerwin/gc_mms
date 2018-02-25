@@ -25,7 +25,7 @@
 		$(function () { 
 			
 			sortBox = $("#sortId").ligerListBox({
-            	 url:'${cp}/menu/getELevelMenu?'+$.param({
+            	 url:'${cp}/sm/menu/getELevelMenu?'+$.param({
 	            		id:frameElement.dialog.get("data").id
 	            	}),isShowCheckBox: false, isMultiSelect: false,
                   valueFieldID: 'test3',height:100
@@ -62,7 +62,7 @@
         function f_selectContact()
         {
             $.ligerDialog.open({ title: '选择父级菜单', name:'winselector',
-            	width: 700, height: 300, url: '${cp}/menu/menuUpdateLoadForward?'+$.param({
+            	width: 700, height: 300, url: '${cp}/sm/menu/menuUpdateLoadForward?'+$.param({
             		id:frameElement.dialog.get("data").id
             	}), 
             	buttons: [
@@ -115,7 +115,7 @@
     			async : false,
     		    cache : false,
     		    dataType:"html",
-    			url:'${cp}/menu/updateMenuOpe',
+    			url:'${cp}/sm/menu/updateMenuOpe',
     			data:{
     				id:$("#id").val(),
     				pId:$("#pId").val(),
@@ -177,7 +177,7 @@
 </head>
 <body style="padding:10px">
 
-    <form id="myForm" name="form1" method="post" action="${cp}/menu/updateMenuOpe" >
+    <form id="myForm" name="form1" method="post" action="${cp}/sm/menu/updateMenuOpe" >
         <input type="hidden" id="txtPid" name="txtPid" value=""/>
         <input type="hidden" id="id" name="id" value=""/>
         <table cellpadding="0" cellspacing="0" class="l-table-edit" >

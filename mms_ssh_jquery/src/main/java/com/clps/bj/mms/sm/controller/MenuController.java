@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,7 +45,7 @@ import com.clps.bj.mms.sm.vo.PermissionInfo;
  * @date 2018年1月26日下午4:09:12
  */
 @Controller
-@RequestMapping(value="/menu")
+@RequestMapping(value="/sm/menu")
 public class MenuController {
 	@Autowired
 	private IMenuService menuService ;
@@ -126,6 +126,54 @@ public class MenuController {
 	}
 	
 	/**
+	 * 日期模糊查询(用于在前台树状显示查询菜单)跳转
+	 * @param req request
+	 * @param rep response 
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value="/queryDateForward")
+	public String queryMenuDateForward(@RequestParam("startDate") String start,@RequestParam("endDate") String end,Model model){
+		model.addAttribute("start",start);
+		model.addAttribute("end",end);
+		System.err.println("start e "+start);
+		System.err.println("end ew"+end);
+		return "menu_query_date";
+	}
+	/**
+	 * 菜单创建日期模糊查询(用于在前台树状显示查询菜单)
+	 * @param req request
+	 * @param rep response 
+	 * @return ModelAndView
+	 */
+	@ResponseBody
+	@RequestMapping(value="/queryMenuByDate",produces="text/html;charset=utf-8")
+	public String queryMenuDate(@RequestParam("startDate") String start,@RequestParam("endDate") String end){
+		List<MyInfoDetail> infos = null;
+		String res = "";
+		try {
+			MyJson json = new MyJson();
+			//如果没选择日期默认为当前日期
+			if(start==null || start.equals("")){  //没输入关键字
+				start = UtilFactory.getInstanceOfDate().getNowStr(TimeFormatConstant.YYYY_MM_DD);
+			}else if(end==null || end.equals("")){
+				end = UtilFactory.getInstanceOfDate().getNowStr(TimeFormatConstant.YYYY_MM_DD);
+			}
+			infos = menuService.queryMenuDate(start,end);
+			System.err.println("size e"+infos.size());
+			res = "{\"Rows\":"+json.getListRoot(infos).replace("nodes", "children").replace(",\"children\":[]", "")+"}";
+			System.err.println("date "+res);
+			
+			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	
+	/**
 	 * 查询所有菜单(用于在前台树状显示所有菜单)
 	 * @param req request
 	 * @param rep response 
@@ -169,8 +217,9 @@ public class MenuController {
 	 * @param req
 	 * @param rep
 	 */	
-	@RequestMapping(value="/deleteMenu")
-	public String deleteMenuOperation(@RequestParam("id") String id,HttpServletRequest req){
+	@ResponseBody
+	@RequestMapping(value="/deleteMenu",produces="text/html;charset=utf-8")
+	public String deleteMenuOperation(@RequestParam("id") String id){
 		boolean isSuc =false;
 		String msg ="删除成功";
 		System.err.println("delete "+id);
@@ -183,8 +232,9 @@ public class MenuController {
 		if(!isSuc){
 			msg = "删除失败";
 		}
-		req.setAttribute("msg", msg);
-		return "menu_query_all";
+		//req.setAttribute("msg", msg);
+		/*return "menu_query_all";*/
+		return msg;
 	}
 	
 	/**
@@ -359,6 +409,8 @@ public class MenuController {
 		return "menu_update_main";
 	}
 	
+	
+	
 	/**
 	 * 通过菜单id获取已有的权限
 	 * @return
@@ -368,6 +420,7 @@ public class MenuController {
 	public String getExistPermissionByMId(@RequestParam("id") String id){
 		MenuPermissionInfo info = new MenuPermissionInfo();
 		info.setMenuId(Integer.valueOf(id));
+		
 		List<PermissionInfo> infos = grantService.getMenuPermissionByMenuId(info);
 		String temp ="";
 		for(PermissionInfo p:infos){
@@ -378,6 +431,7 @@ public class MenuController {
 					p.setPmsnName(temp+"-"+p.getPmsnUrl());
 					
 				}
+				
 			}else{
 				p.setPmsnName("");
 				p.setPmsnUrl("");

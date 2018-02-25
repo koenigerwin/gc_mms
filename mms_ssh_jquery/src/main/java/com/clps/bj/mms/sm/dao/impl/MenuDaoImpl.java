@@ -25,6 +25,8 @@ import com.clps.bj.mms.constant.TimeFormatConstant;
 import com.clps.bj.mms.sm.dao.MenuDao;
 import com.clps.bj.mms.sm.dao.MenuHql;
 import com.clps.bj.mms.sm.entity.Menu;
+import com.clps.bj.mms.sm.vo.MyInfo;
+import com.clps.bj.mms.sm.vo.MyInfoDetail;
 
 
 
@@ -463,20 +465,18 @@ public class MenuDaoImpl implements MenuDao, MenuHql{
 		menus = getAllParentAndChildMenuById(Integer.valueOf(id));
 		//isSuc = deleteChildrenMenu(menus, session, String.valueOf(id));
 		boolean isSuc = false;
-		for(Menu menuTemp:menus){
-			
-			
-					try {
-						session = getSession();
-			
+		session = getSession();
+		Menu menuTemp = null;
+		for(int i=0,length=menus.size();i<length;i++){			
+			menuTemp = 	menus.get(i);
+			try { 
 						session.delete(menuTemp);
 						
 					} catch (Exception e) {
 						
 						e.printStackTrace();
 					}
-				
-				
+								
 		}		
 		isSuc = true;
 		return isSuc;
@@ -592,5 +592,14 @@ public class MenuDaoImpl implements MenuDao, MenuHql{
 		
 		
 		return null;
+	}
+
+	@Override
+	public List<Menu> queryMenuDate(String start, String end) throws Exception {
+		args = new Object[]{start,end};
+		session = getSession();
+		
+		menus = getQuery(session, queryMenuDate, args).list();
+		return menus;
 	}
 }
