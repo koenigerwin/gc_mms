@@ -19,19 +19,8 @@ $(function (){
         },
         { display: '创建日期', name: 'meetingCreateDatetime', align: 'left',render: function (item){
             return toLocalDateFormat(item.meetingCreateDatetime); 
-         }},
-       { display: '创建人', name: 'meetingCreateName', align: 'left'
-    	   //,render: function (item){
-//        	$.ajax({ url: '/clps_mms/bm/meeting/getUser',data: item.meetingCreateName, success: function(data){
-//        		
-//          userName= userNamedata.userName;
-//    	
-//        	}
-//         });
-        	//return  userName;
-       // }
-         }             
-        ],dataAction: 'local',
+         }
+        } ],dataAction: 'local',
         url:'/clps_mms/bm/meeting/meetingList', 
         sortName:'meetingBegintime',
         pageSize:10,

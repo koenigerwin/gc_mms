@@ -80,11 +80,13 @@ body {
 		<input type="button" value="查询" id="search" onclick="ser();"/>
 		</div> 
 		</form>	 
-	<form >	
-	<div id="logGrid">	
+	<form>	
+	<div id="logGrid">		
 	</div>
 	</form>
 
-	<div style="display: none;"></div>
+	<div style="display: none;">
+	
+	</div>
 </body>
 </html>

@@ -89,7 +89,7 @@ $(document).ready(function() {
 			$( "#reservebox" ).dialog({
 				autoOpen: false,
 				height: 600,
-				width: 1000,
+				width: 800,
 				title: 'Reserve meeting  on ' + selectdate,
 				modal: true,
 				position: "top",
@@ -109,7 +109,6 @@ $(document).ready(function() {
 							//需要的会议信息
 							var meetingId=$("#meetingId").val().trim();//会议Id
 							var meetinguser = $("#meetinguser").val().trim();//会议参与者
-							//var title = $("#title").val().trim();//抄送
 							var meetingTitle = $("#meetingTitle").val().trim();//会议标题
 							var meetingBegintime =$("#meetingBegintime").val().trim();//会议开始时间
 							var meetingEndtime =$("#meetingEndtime").val().trim();//会议结束时间
@@ -148,8 +147,8 @@ $(document).ready(function() {
 			var fstart  = $.fullCalendar.formatDate(event.start, "yyyy-MM-dd HH:mm:ss");	
 			$( "#reserveinfo" ).dialog({
 				autoOpen: false,
-				height: 450,
-				width: 600,
+				height: 350,
+				width: 400,
 				modal: true,
 				position: "center",
 				draggable: true,   //是否可移动
@@ -188,11 +187,11 @@ $(document).ready(function() {
 						if(userId==$("#userId").val()){
 							$("#userId").attr(selected='selected');
 						}
-						$("meetingContent").val(meetingContent);						
+						$("#meetingContent").val(meetingContent);						
 						$( "#reservebox" ).dialog({
 							autoOpen: false,
 							height: 600,
-							width: 1000,
+							width: 800,
 							title: 'Update meeting on ' + selectdate,
 							modal: true,
 							position: "top",
@@ -264,10 +263,10 @@ $(document).ready(function() {
 			}else{
 				showtopic = event.title;
 			}
-			$("#revdesc").html('<div style="font-weight:bold;color:#5383c2;border-bottom: 1px dotted #5383c2; padding: 3px 0px 3px;">'  
-								+ showtopic + "这是个当点击具体日程弹出来的日程详细信息</div>");
+			$("#revdesc").html('<div style="font-weight:bold;color:#5383c2; padding: 3px 0px 3px;">'  
+								+ showtopic +"</div>");
 			$( "#reserveinfo" ).dialog({ 
-				title:fstart + "-" +showtopic
+				title:"Delete meeting"+fstart + "-" +showtopic
 			});
 			$( "#reserveinfo" ).dialog( "open" );
 			return false;
