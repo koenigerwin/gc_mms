@@ -1,7 +1,8 @@
 package com.clps.bj.mms.bm.dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -47,7 +48,9 @@ public class MeetingDaoImpl implements MeetingDao {
 			+ "r.roomId,r.roomName,r.roomIsEnable  from Meeting m "
 			+ " left join fetch m.userinfo u left join fetch m.room r "			
 			+ "  where m.meetingId in(select mu.meeting.)";
-	private static final String getEndTimeHql="select meetingEndtime from Meeting"; 
+	private static final String getEndTimeHql="select m.meetingEndtime from Meeting m where m.meetingStatus=1 "; 
+	private static final String updateStatusHql="update Meeting m set m.meetingStatus=0 "
+			+ " where m.meetingStatus=1 and  m.meetingEndtime=?";
     private static final String getRoomListHql="select r.roomId,r.roomName from Room r"
     		+ " where r.roomIsEnable='1'";
     private static final String getUserListHql="select u.userId,u.userName from UserInfoMain u";
@@ -260,8 +263,13 @@ public class MeetingDaoImpl implements MeetingDao {
 			}		
 		return userList;
 	}
-	
+	@Override
+	public boolean updateStatus(Date newdate) {
+		String datestr=new SimpleDateFormat("yyyy-MM-dd hh:mm").format(newdate);
+		Query query = session().createQuery(updateStatusHql);
+		query.setParameter(0, datestr);		
+		return query.executeUpdate()>0;
+	}
 
-	
 
 }

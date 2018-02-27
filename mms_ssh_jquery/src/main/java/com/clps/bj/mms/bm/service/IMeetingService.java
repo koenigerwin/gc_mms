@@ -1,5 +1,6 @@
 package com.clps.bj.mms.bm.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.clps.bj.mms.bm.entity.Meeting;
@@ -72,6 +73,14 @@ public interface IMeetingService {
 	 * @return List<String>
 	 */
 	List<String> listEndTime();
+	/**
+	 * Decription:根据结束时间更改会议状态，如果会议已结束则将会议状态改为已结束状态。
+	 * updateStatus
+	 * 2018年2月23日 上午11:51:02
+	 * @param endtime
+	 * @return boolean
+	 */
+	boolean updateStatus(Date newdate);
 	/**
 	 * Decription:返回Meeting对象
 	 * getMeetingByID

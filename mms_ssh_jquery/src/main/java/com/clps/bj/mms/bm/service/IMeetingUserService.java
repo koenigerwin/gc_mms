@@ -1,10 +1,7 @@
 package com.clps.bj.mms.bm.service;
-
-import java.util.List;
 import java.util.Map;
-
 import com.clps.bj.mms.bm.entity.MeetingUser;
-import com.clps.bj.mms.bm.vo.MeetingUserVo;
+
 
 /**
  *@Description: 会议用户中间表的业务层接口

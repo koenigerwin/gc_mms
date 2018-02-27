@@ -20,38 +20,40 @@ import com.clps.bj.mms.bm.vo.MeetingUserVo;
  */
 @Service
 public class MeetingUserServiceImpl implements IMeetingUserService {
-@Autowired
-MeetingUserDao meetinguserdao;
+	@Autowired
+	MeetingUserDao meetinguserdao;
+
 	@Override
-	public Map<String,String> meetingUserList(Integer meetingId) {
-		List<MeetingUserVo> mList=meetinguserdao.meetingUserList(meetingId);
-		String meetingUserIds="";
-		String meetingUserNames="";
-		System.out.println(mList.size());
-		Map<String,String> meetingUserMap=new HashMap<String,String>();
-		for(MeetingUserVo mu:mList){
-			meetingUserIds+=mu.getUserId();
-			meetingUserIds+=";";
-			meetingUserNames+=mu.getUserName();
-			meetingUserNames+=";";	
+	public Map<String, String> meetingUserList(Integer meetingId) {
+		List<MeetingUserVo> mList = meetinguserdao.meetingUserList(meetingId);
+		String meetingUserIds = "";
+		String meetingUserNames = "";
+		Map<String, String> meetingUserMap = new HashMap<String, String>();
+		for (MeetingUserVo mu : mList) {
+			meetingUserIds += mu.getUserId();
+			meetingUserIds += ";";
+			meetingUserNames += mu.getUserName();
+			meetingUserNames += ";";
 		}
-		//key存userids,value存usernames	
+		// key存userids,value存usernames
 		meetingUserMap.put(meetingUserIds, meetingUserNames);
 		return meetingUserMap;
 
 	}
+
 	@Override
 	public boolean addMeetingUser(MeetingUser meetinguser) {
-	return meetinguserdao.addMeetingUser(meetinguser);
+		return meetinguserdao.addMeetingUser(meetinguser);
 	}
+
 	@Override
 	public boolean delMeetingUser(MeetingUser meetinguser) {
 		return meetinguserdao.delMeetingUser(meetinguser);
 	}
+
 	@Override
-	public boolean delMeetingUser(Integer meetingId) {	
+	public boolean delMeetingUser(Integer meetingId) {
 		return meetinguserdao.delMeetingUser(meetingId);
 	}
-
 
 }

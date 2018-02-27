@@ -1,11 +1,10 @@
 package com.clps.bj.mms.bm.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.clps.bj.mms.bm.entity.Meeting;
-import com.clps.bj.mms.bm.entity.MeetingUser;
 import com.clps.bj.mms.bm.entity.Room;
-import com.clps.bj.mms.bm.vo.MeetingUserVo;
 import com.clps.bj.mms.bm.vo.MeetingVo;
 import com.clps.bj.mms.sm.entity.UserInfoMain;
 
@@ -76,6 +75,15 @@ public interface MeetingDao {
 	 * @return List<String>
 	 */
 	List<String> getEndTime();
+
+	/**
+	 * Decription:根据结束时间更改会议状态，如果会议已结束则将会议状态改为已结束状态。
+	 * updateStatus
+	 * 2018年2月23日 上午11:51:02
+	 * @param endtime
+	 * @return boolean
+	 */
+	boolean updateStatus(Date newdate);
 	/**
 	 * Decription:返回Meeting对象
 	 * getMeetingByID

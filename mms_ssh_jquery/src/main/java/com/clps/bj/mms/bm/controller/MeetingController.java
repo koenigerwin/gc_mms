@@ -113,8 +113,7 @@ public class MeetingController {
 			}
 		}
 	}
-
-	/**
+	/**	
 	 * Decription:得到UserInfoMain对象
 	 *  getUser 
 	 *  2018年2月6日 上午11:16:19
@@ -177,25 +176,28 @@ public class MeetingController {
 		meeting.setUserinfo(userinfo);
 		String[] meetinguserid = meetingvo.getMeetingUserIds().split(";");
 		if (meetingvo.getMeetingId() == null) {// 添加
-			if (meetingService.addMeeting(meeting)) {
+			if (meetingService.addMeeting(meeting)){
 				for (String userid : meetinguserid) {
 					MeetingUser meetinguser = new MeetingUser();
-					UserInfoMain users = new UserInfoMain();
-					users.setUserId(Integer.parseInt(userid));
-					meetinguser.setMeeting(meeting);
-					System.err.println("meeitng添加成功之后" + meeting.getMeetingId());
-					meetinguser.setUserinfo(users);
+//					UserInfoMain users = new UserInfoMain();
+//					users.setUserId(Integer.parseInt(userid));
+					UserInfoMain users=meetingService.getUserInfoMainById(Integer.parseInt(userid));
+					//发送邮件标记
+					logger.info(users.getUserEmail()+"=================");
+					meetinguser.setMeeting(meeting);					
+					meetinguser.setUserinfo(users);					
 					meetingUserService.addMeetingUser(meetinguser);
 				}
 				return "redirect:/bm/meeting/meetingInfo";
 			}
-		} else {// 修改
+		}else{// 修改
 			if (meetingService.updateMeeting(meeting)) {
 				meetingUserService.delMeetingUser(meeting.getMeetingId());
 				for (String userid : meetinguserid) {
 					MeetingUser meetinguser = new MeetingUser();
-					UserInfoMain users = new UserInfoMain();
-					users.setUserId(Integer.parseInt(userid));
+					UserInfoMain users=meetingService.getUserInfoMainById(Integer.parseInt(userid));
+					//发送邮件标记
+					logger.info(users.getUserEmail()+"=================");
 					meetinguser.setMeeting(meeting);
 					meetinguser.setUserinfo(users);
 					meetingUserService.addMeetingUser(meetinguser);
