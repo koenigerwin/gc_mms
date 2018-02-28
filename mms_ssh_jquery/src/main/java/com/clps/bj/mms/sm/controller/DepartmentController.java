@@ -1,4 +1,4 @@
-/** 
+﻿/** 
  * Project Name:mms_ssh(springmvc+spring+hibernate) 
  * File Name:UserController.java 
  * Package Name:com.clps.bj.mms.sm.controller 
@@ -54,13 +54,6 @@ public class DepartmentController {
 	@Resource
 	private  HttpServletResponse rep;
 	
-	/**
-	 * 进入dept页面
-	 */
-	@RequestMapping(value="/deptMain")
-	public String deptMain(){
-		return "dept_main";
-	}
 	
 	/**
 	 * 进入dept_add页面
@@ -79,6 +72,9 @@ public class DepartmentController {
 		return mad;
 	}
 	
+	/**
+	 * 进入dept页面
+	 */		
 	@RequestMapping(value="/findAll")
 	public ModelAndView findAll(){
 		ModelAndView mad = new ModelAndView("dept_main");
