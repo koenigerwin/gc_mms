@@ -1,17 +1,14 @@
 package com.clps.bj.mms.bm.service.impl;
 
 
-import java.util.HashSet;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.clps.bj.mms.bm.constant.MeetingStatusType;
 import com.clps.bj.mms.bm.dao.MeetingDao;
 import com.clps.bj.mms.bm.entity.Meeting;
-import com.clps.bj.mms.bm.entity.MeetingUser;
 import com.clps.bj.mms.bm.entity.Room;
 import com.clps.bj.mms.bm.service.IMeetingService;
 import com.clps.bj.mms.bm.vo.MeetingVo;
@@ -41,8 +38,9 @@ public class MeetingServiceImpl implements IMeetingService {
 		}
 	
 		if(meeting.getRoom().getroomIsEnable().equals("1")){
-			logger.info("添加成功");
-			return meetingdao.addMeeting(meeting);	
+			boolean b=meetingdao.addMeeting(meeting);	
+			logger.info("添加成功");			
+			return b;
 		}
 		logger.info("添加失败");
 		return false;
@@ -95,14 +93,8 @@ public class MeetingServiceImpl implements IMeetingService {
 		UserInfoMain userinfo=new UserInfoMain();
 		userinfo.setUserId(meetingVo.getUserId());
 		userinfo.setUserName(meetingVo.getUserName());
-		meeting.setUserinfo(userinfo);
-		
+		meeting.setUserinfo(userinfo);		
 		List<MeetingVo> meetingList=meetingdao.getMeeting(meeting);
-//		for(MeetingVo m:meetingList){
-//			List<String> liststr=meetingUserList(m.getMeetingId());
-//			m.setMeetingUserIds(liststr.get(0));
-//			m.setMeetingUserNames(liststr.get(1));
-//		}
 		return meetingList;
 	}
 
@@ -167,11 +159,8 @@ public class MeetingServiceImpl implements IMeetingService {
 		return meetingdao.getUserList();
 	}
 
-	
-	
-
-	
-	
-
-	
+	@Override
+	public boolean updateStatus(Date newdate) {
+		return meetingdao.updateStatus(newdate);
+	}
 }

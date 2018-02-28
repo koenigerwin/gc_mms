@@ -105,9 +105,9 @@
 			</c:forEach>
 			</SELECT>
 	   </DIV>
-			<DIV >
+			<DIV class="rowElem">
 				<LABEL>会议内容:</LABEL> 				
-				<textarea id="meetingContent" name="meetingContent" class="ckeditor"></textarea> 	    
+				<textarea id="meetingContent" name="meetingContent"  style="width:230px;height:80px;"></textarea> 	    
 		</DIV>
 			
 			<DIV class="rowElem"> </DIV>
@@ -120,9 +120,6 @@
 			</DIV>
 		</FORM>
 	</DIV>
-</DIV>
-    
-<script src="${pageContext.request.contextPath }/static/js/ckeditor/ckeditor.js"></script>
- <script type="text/javascript">CKEDITOR.replace('meetingContent'); </script> 
+</DIV>    
 </BODY>
 </HTML>
